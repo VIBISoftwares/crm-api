@@ -1,13 +1,14 @@
 package com.vibi.crm.model;
 
-public class Contact {
+public class CompanyContact {
+	public String sno;
 	public String company_name;
 	public String office_address;
 	public String contact_person;
 	public String person_contact;
 	public String office_contact;
 	public String email;
-	public String gstnogst_no;
+	public String gst_no;
 	public String company_level;
 	public String reference;
 	public String assignto;
@@ -17,6 +18,12 @@ public class Contact {
 	public String updatedby;
 	public String updateddate;
 	
+	public String getSno() {
+		return sno;
+	}
+	public void setSno(String sno) {
+		this.sno = sno;
+	}
 	public String getCompany_name() {
 		return company_name;
 	}
@@ -53,11 +60,11 @@ public class Contact {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public String getGstnogst_no() {
-		return gstnogst_no;
+	public String getGst_no() {
+		return gst_no;
 	}
-	public void setGstnogst_no(String gstnogst_no) {
-		this.gstnogst_no = gstnogst_no;
+	public void setGst_no(String gst_no) {
+		this.gst_no = gst_no;
 	}
 	public String getCompany_level() {
 		return company_level;
