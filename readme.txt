@@ -34,3 +34,10 @@ request:
     "createdby": "ADMIN",
     "createddate": "2022-06-13"
 }
+
+
+http://localhost:8080/crm/api/findCompanyList
+request: 
+    {
+    "sno":"2",
+    }

@@ -102,7 +102,19 @@ public class CompanyContactDAOImpl implements CompanyContactDAO{
 
 	@Override
 	public List<CompanyContact> findCompanyInfo(CompanyContact companyContact) {
-		// TODO Auto-generated method stub
+		String query="SELECT * FROM company_contact where sno=? ";
+		try {			
+			RowMapper<CompanyContact> rowMapper = new BeanPropertyRowMapper<CompanyContact>(CompanyContact.class);
+			List<CompanyContact> res = jdbcTemplate.query(query, rowMapper,companyContact.getSno() );
+			if (res.size()>0) {
+				logger.info("Login as - Admin , findCompanyInfo response - " + g.toJson(res)	+ "\n");
+				return res;
+			}else {
+				return null;
+			}
+		}catch (Exception e) {
+			logger.info("Login as - Admin , action - findCompanyInfo,  Exception - " + e.toString() + "\n");
+		}
 		return null;
 	}
 
