@@ -68,6 +68,22 @@ public class ContactController {
 		
 	}
 	
+	@RequestMapping(method = RequestMethod.POST, value = "/deleteCompanyInfo")
+	public ResponseEntity<String> deleteCompanyInfo(@RequestBody CompanyContact contact, HttpSession session) {
+		HttpStatus status = HttpStatus.OK;
+		Gson g = new Gson();
+		String json_response = ""; System.out.println(contact);
+		String createClient = contactDao.deleteCompanyInfo(contact);
+		if (createClient.equalsIgnoreCase(Constant.MSG_STATUS_SUCCESS)) {
+			json_response = "{\"status\":" + g.toJson(Constant.MSG_STATUS_SUCCESS) + ",\"message\":" + g.toJson(Constant.MSG_COMP_ADD_SUCCESS) + "}";
+		} else {
+			json_response = "{\"status\":" + g.toJson(Constant.MSG_STATUS_FAILURE) + ",\"message\":" + g.toJson(Constant.MSG_COMP_ADD_FAIL) + "}";
+		}
+		logger.info("Login as - Admin , action - createClient json respone : - " + json_response + "\n");
+		return new ResponseEntity<String>(json_response, status);		
+		
+	}
+	
 	@RequestMapping(method = RequestMethod.GET, value = "/getCompanyList")
 	public ResponseEntity<String> getClientDetails() {
 		HttpStatus status = HttpStatus.OK;
@@ -102,7 +118,6 @@ public class ContactController {
 		}
 		logger.info("Login as - Admin,  action - findCompanyInfo json respone : - " + json_response + "\n");
 		return new ResponseEntity<String>(json_response, status);
-
 	}
 	
 	

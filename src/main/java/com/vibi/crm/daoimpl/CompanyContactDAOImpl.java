@@ -63,20 +63,20 @@ public class CompanyContactDAOImpl implements CompanyContactDAO{
 		String query = "UPDATE company_contact SET company_name=?, office_address=?, contact_person=?,person_contact=?,office_contact=?,email=?,gst_no=?, "
 				+ "company_level=?, reference=?, assignto=?, status=?, updated_by=?, updated_date=? WHERE sno=?";	
 		try {
-			logger.info("Login as - Admin action - addCompanyInfo , Inputs - " + g.toJson(companyContact) + "\n");
+			logger.info("Login as - Admin action - updateCompanyInfo , Inputs - " + g.toJson(companyContact) + "\n");
 		
 			int row = jdbcTemplate.update(query,companyContact.getCompany_name(),companyContact.getOffice_address(),
 					companyContact.getContact_person(),companyContact.getPerson_contact(),companyContact.getOffice_contact(),companyContact.getEmail(),
 					companyContact.getGst_no(),companyContact.getCompany_level(),companyContact.getReference(),companyContact.getAssignto(),companyContact.getStatus(),
 					companyContact.getCreatedby(),	UtilClass.getCurrentDateAndTime(), companyContact.getSno() );
 			if (row>0) {
-				logger.info("Login as - Admin , addCompanyInfo response - "+ g.toJson(Constant.MSG_STATUS_SUCCESS) + "\n");
+				logger.info("Login as - Admin , updateCompanyInfo response - "+ g.toJson(Constant.MSG_STATUS_SUCCESS) + "\n");
 				return Constant.MSG_STATUS_SUCCESS;
 			}
 		} catch (EmptyResultDataAccessException empty) {
-			logger.info("Login as - Admin, action - addCompanyInfo,  EmptyResultDataAccessException - " + empty.toString() + "\n");
+			logger.info("Login as - Admin, action - updateCompanyInfo,  EmptyResultDataAccessException - " + empty.toString() + "\n");
 		} catch (Exception e) {
-			logger.info("Login as - Admin, action - addCompanyInfo,  Exception - "+ e.toString() + "\n");
+			logger.info("Login as - Admin, action - updateCompanyInfo,  Exception - "+ e.toString() + "\n");
 		}
 		logger.info("Login as - Admin, addCompanyInfo response - "
 				+ g.toJson(Constant.MSG_STATUS_FAILURE) + "\n");
@@ -86,7 +86,7 @@ public class CompanyContactDAOImpl implements CompanyContactDAO{
 	@Override
 	public List<CompanyContact> getCompanyInfo() {			
 //		CompanyContact companyContact = new CompanyContact();		
-		String query="SELECT * FROM company_contact";
+		String query="SELECT * FROM company_contact where status=1 ";
 		try {			
 			RowMapper<CompanyContact> rowMapper = new BeanPropertyRowMapper<CompanyContact>(CompanyContact.class);
 			List<CompanyContact> companyList = jdbcTemplate.query(query, rowMapper );
@@ -119,7 +119,7 @@ public class CompanyContactDAOImpl implements CompanyContactDAO{
 	}
 
 	@Override
-	public String removeCompanyInfo(CompanyContact companyContact) {
+	public String remove(CompanyContact companyContact) {
 		// TODO Auto-generated method stub
 		return null;
 	}

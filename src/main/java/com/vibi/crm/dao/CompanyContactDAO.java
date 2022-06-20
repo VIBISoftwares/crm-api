@@ -9,6 +9,6 @@ public String addCompanyInfo(CompanyContact companyContact);
 public String updateCompanyInfo(CompanyContact companyContact);
 public List<CompanyContact> getCompanyInfo();
 public List<CompanyContact> findCompanyInfo(CompanyContact companyContact);
-public String removeCompanyInfo(CompanyContact companyContact);
+public String deleteCompanyInfo(CompanyContact companyContact);
 
 }
