@@ -12,6 +12,10 @@ public class Constant {
 	public static String MSG_RCD_NOT_AVL = "No records available";
 	public static String MSG_COMP_ADD_SUCCESS = "Company contact added successfully";
 	public static String MSG_COMP_ADD_FAIL = "Company contact can not be added";
+	public static String MSG_COMP_UPDATE_SUCCESS = "Company contact update successfully";
+	public static String MSG_COMP_UPDATE_FAIL = "Company contact can not be updated";
+	public static String MSG_COMP_DELETE_SUCCESS = "Company contact deleted successfully";
+	public static String MSG_COMP_DELETE_FAIL = "Company contact can not be delete";
 	
 	
 	

@@ -56,32 +56,30 @@ public class ContactController {
 	public ResponseEntity<String> updateCompanyInfo(@RequestBody CompanyContact contact, HttpSession session) {
 		HttpStatus status = HttpStatus.OK;
 		Gson g = new Gson();
-		String json_response = ""; System.out.println(contact);
+		String json_response = "";
 		String createClient = contactDao.updateCompanyInfo(contact);
 		if (createClient.equalsIgnoreCase(Constant.MSG_STATUS_SUCCESS)) {
-			json_response = "{\"status\":" + g.toJson(Constant.MSG_STATUS_SUCCESS) + ",\"message\":" + g.toJson(Constant.MSG_COMP_ADD_SUCCESS) + "}";
+			json_response = "{\"status\":" + g.toJson(Constant.MSG_STATUS_SUCCESS) + ",\"message\":" + g.toJson(Constant.MSG_COMP_UPDATE_SUCCESS) + "}";
 		} else {
-			json_response = "{\"status\":" + g.toJson(Constant.MSG_STATUS_FAILURE) + ",\"message\":" + g.toJson(Constant.MSG_COMP_ADD_FAIL) + "}";
+			json_response = "{\"status\":" + g.toJson(Constant.MSG_STATUS_FAILURE) + ",\"message\":" + g.toJson(Constant.MSG_COMP_UPDATE_FAIL) + "}";
 		}
-		logger.info("Login as - Admin , action - createClient json respone : - " + json_response + "\n");
-		return new ResponseEntity<String>(json_response, status);		
-		
+		logger.info("Login as - Admin , action - updateCompanyInfo json respone : - " + json_response + "\n");
+		return new ResponseEntity<String>(json_response, status);				
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/deleteCompanyInfo")
 	public ResponseEntity<String> deleteCompanyInfo(@RequestBody CompanyContact contact, HttpSession session) {
 		HttpStatus status = HttpStatus.OK;
 		Gson g = new Gson();
-		String json_response = ""; System.out.println(contact);
+		String json_response = ""; 
 		String createClient = contactDao.deleteCompanyInfo(contact);
 		if (createClient.equalsIgnoreCase(Constant.MSG_STATUS_SUCCESS)) {
-			json_response = "{\"status\":" + g.toJson(Constant.MSG_STATUS_SUCCESS) + ",\"message\":" + g.toJson(Constant.MSG_COMP_ADD_SUCCESS) + "}";
+			json_response = "{\"status\":" + g.toJson(Constant.MSG_STATUS_SUCCESS) + ",\"message\":" + g.toJson(Constant.MSG_COMP_DELETE_SUCCESS) + "}";
 		} else {
-			json_response = "{\"status\":" + g.toJson(Constant.MSG_STATUS_FAILURE) + ",\"message\":" + g.toJson(Constant.MSG_COMP_ADD_FAIL) + "}";
+			json_response = "{\"status\":" + g.toJson(Constant.MSG_STATUS_FAILURE) + ",\"message\":" + g.toJson(Constant.MSG_COMP_DELETE_FAIL) + "}";
 		}
-		logger.info("Login as - Admin , action - createClient json respone : - " + json_response + "\n");
-		return new ResponseEntity<String>(json_response, status);		
-		
+		logger.info("Login as - Admin , action - deleteCompanyInfo json respone : - " + json_response + "\n");
+		return new ResponseEntity<String>(json_response, status);				
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/getCompanyList")

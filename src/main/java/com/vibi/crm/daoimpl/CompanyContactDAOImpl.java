@@ -86,7 +86,7 @@ public class CompanyContactDAOImpl implements CompanyContactDAO{
 	@Override
 	public List<CompanyContact> getCompanyInfo() {			
 //		CompanyContact companyContact = new CompanyContact();		
-		String query="SELECT * FROM company_contact where status=1 ";
+		String query="SELECT * FROM company_contact"; // where status=1 
 		try {			
 			RowMapper<CompanyContact> rowMapper = new BeanPropertyRowMapper<CompanyContact>(CompanyContact.class);
 			List<CompanyContact> companyList = jdbcTemplate.query(query, rowMapper );
@@ -118,10 +118,25 @@ public class CompanyContactDAOImpl implements CompanyContactDAO{
 		return null;
 	}
 
+
 	@Override
-	public String remove(CompanyContact companyContact) {
-		// TODO Auto-generated method stub
-		return null;
+	public String deleteCompanyInfo(CompanyContact companyContact) {
+		String query = "UPDATE company_contact SET status=0 , updated_by=?, updated_date=? WHERE sno=?";	
+		try {
+			logger.info("Login as - Admin action - updateCompanyInfo , Inputs - " + g.toJson(companyContact) + "\n");
+		
+			int row = jdbcTemplate.update(query, companyContact.getCreatedby(),	UtilClass.getCurrentDateAndTime(), companyContact.getSno() );
+			if (row>0) {
+				logger.info("Login as - Admin , DeleteCompanyInfo response - "+ g.toJson(Constant.MSG_STATUS_SUCCESS) + "\n");
+				return Constant.MSG_STATUS_SUCCESS;
+			}
+		} catch (EmptyResultDataAccessException empty) {
+			logger.info("Login as - Admin, action - DeleteCompanyInfo,  EmptyResultDataAccessException - " + empty.toString() + "\n");
+		} catch (Exception e) {
+			logger.info("Login as - Admin, action - DeleteCompanyInfo,  Exception - "+ e.toString() + "\n");
+		}
+		logger.info("Login as - Admin, DeleteCompanyInfo response - " + g.toJson(Constant.MSG_STATUS_FAILURE) + "\n");
+		return Constant.MSG_STATUS_FAILURE;
 	}
 
 
