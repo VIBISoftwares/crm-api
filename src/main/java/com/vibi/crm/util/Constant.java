@@ -24,7 +24,13 @@ public class Constant {
 	public static String MSG_CLIENT_UPDATE_FAIL = "Client contact can not be updated";
 	public static String MSG_CLIENT_DELETE_SUCCESS = "Client contact deleted successfully";
 	public static String MSG_CLIENT_DELETE_FAIL = "Client contact can not be delete";
-	
+//	Leads
+	public static String MSG_LEAD_ADD_SUCCESS = "Lead contact added successfully";
+	public static String MSG_LEAD_ADD_FAIL = "Lead contact can not be added";
+	public static String MSG_LEAD_UPDATE_SUCCESS = "Lead contact update successfully";
+	public static String MSG_LEAD_UPDATE_FAIL = "Lead contact can not be updated";
+	public static String MSG_LEAD_DELETE_SUCCESS = "Lead contact deleted successfully";
+	public static String MSG_LEAD_DELETE_FAIL = "Lead contact can not be delete";
 	
 	public static String MSG_ACCT_ADD_SUCCESS = "Account added successfully";
 	public static String MSG_ACCT_ADD_FAIL = "Account can not be added";

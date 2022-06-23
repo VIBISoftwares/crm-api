@@ -14,7 +14,6 @@ import org.springframework.stereotype.Repository;
 import com.google.gson.Gson;
 import com.vibi.crm.dao.ClientContactDAO;
 import com.vibi.crm.model.ClientContact;
-import com.vibi.crm.model.CompanyContact;
 import com.vibi.crm.util.Constant;
 import com.vibi.crm.util.UtilClass;
 
