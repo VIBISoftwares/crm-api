@@ -41,3 +41,65 @@ request:
     {
     "sno":"2",
     }
+
+    
+http://localhost:8080/crm/api/addClientInfo
+        {
+    "contact_name":"Sitha",
+    "contact_number":"989898989",
+    "alternate_number":"",
+    "email_id":"",
+    "facebook":"",
+    "instagram":"",
+    "linked_in":"",
+    "others_media_id":"",
+    "status": "1",
+    "createdby": "ADMIN",
+    "createddate": "2022-06-23"
+}
+
+http://localhost:8080/crm/api/getAllClientList
+
+    {
+    "sno":"2",
+    "contact_name":"Arjuna",
+    "contact_number":"889898989",
+    "alternate_number":"1234567789",
+    "email_id":"",
+    "facebook":"",
+    "instagram":"",
+    "linked_in":"",
+    "others_media_id":"",
+    "status": "1",
+    "createdby": "ADMIN",
+    "createddate": "2022-06-23"
+}
+
+
+http://localhost:8080/crm/api/updateClientInfo
+    {
+    "sno":"2",
+    "contact_name":"Arjuna",
+    "contact_number":"889898989",
+    "alternate_number":"1234567789",
+    "email_id":"",
+    "facebook":"",
+    "instagram":"",
+    "linked_in":"",
+    "others_media_id":"",
+    "status": "1",
+    "createdby": "ADMIN",
+    "createddate": "2022-06-23"
+}
+
+
+http://localhost:8080/crm/api/findClientInfo
+    { "sno":"2", }
+
+http://localhost:8080/crm/api/deleteClientInfo
+   { "sno":"2", }
+
+
+
+
+
