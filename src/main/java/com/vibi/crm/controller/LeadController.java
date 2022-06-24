@@ -94,7 +94,7 @@ public class LeadController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/getAllLeadInfo")
-	public ResponseEntity<String> getAllLeadInfo() {
+	public ResponseEntity<String> getAllLeadInfo(@RequestBody Leads leads, HttpSession session) {
 		HttpStatus status = HttpStatus.OK;
 		Gson g = new Gson();
 		String json_response = "";
@@ -118,7 +118,7 @@ public class LeadController {
 		HttpStatus status = HttpStatus.OK;
 		Gson g = new Gson();
 		String json_response = "";
-		List<Leads> companyList = leadsDao.findLeadInfo(leads);
+		List<Leads> companyList = leadsDao.findLeadInfo(leads); System.out.println(companyList);
 		if (companyList != null) {
 			json_response = "{\"status\":" + g.toJson(Constant.MSG_STATUS_SUCCESS) + ",\"message\":"
 					+ g.toJson(Constant.MSG_RCD_AVL)

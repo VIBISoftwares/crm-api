@@ -100,6 +100,53 @@ http://localhost:8080/crm/api/deleteClientInfo
    { "sno":"2", }
 
 
+http://localhost:8080/crm/api/addLeadInfo
+  {
+     "sno":"",
+    "title":"",
+    "firstname":"",
+    "middlename":"",
+    "lastname":"",
+    "gender":"",
+    "email":"",
+    "contact":"",
+    "marital_status":"",
+    "guardian_type":"",
+    "guardian_name":"",
+    "guardian_contact":"",
+    "occupation":"",
+    "dob":"",
+    "relegion":"",
+    "community":"",
+    "caste":"",
+    "address_line1":"",
+    "address_line2":"",
+    "area":"",
+    "district":"",
+    "state":"",
+    "country":"",
+    "pincode":"",
+    "followupdate":"",
+    "source":"",
+    "is_convert":"",
+    "created_by":"",
+    "created_date":"",
+    "updated_by":"",
+    "updated_date":""
 
+    }
 
+    http://localhost:8080/crm/api/updateLeadInfo
 
+    http://localhost:8080/crm/api/deleteLeadInfo
+    {
+     "sno":""
+    }
+
+    http://localhost:8080/crm/api/getAllLeadInfo
+
+    http://localhost:8080/crm/api/findLeadInfo
+
+    {   
+     "sno":""
+    }
