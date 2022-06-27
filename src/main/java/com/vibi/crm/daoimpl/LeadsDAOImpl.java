@@ -112,12 +112,26 @@ leads.setFollowupdate("2022-07-24");
     @Override
     public List<Leads> findLeadInfo(Leads leads) {
 		System.out.println("leads data = "+ g.toJson(leads));
+		String where="";
 		String sno="";
+		String from_date="";
+		String to_date="";
 		String limit = " ";//limit "+leads.getLimit();
 		String order_by =" ";//order by "+leads.getOrder_by();
 		if(leads.getSno()!=null){
-			sno =" and sno = "+leads.getSno();
+			where =" and sno = "+leads.getSno();
 		}
+		if(leads.getFrom_date()!=null){
+			where = where+" and DATE_FORMAT(followupdate,'%Y-%m-%d') >= "+leads.getFrom_date();
+		}
+		if(leads.getTo_date()!=null){
+			where = where+" and  DATE_FORMAT(followupdate,'%Y-%m-%d')  <= "+leads.getTo_date();
+		}
+
+		if(leads.getOrder_by()!=null){
+			order_by =" order by "+leads.getOrder_by();
+		}
+
 		if(leads.getLimit()!=null){
 			limit = " limit "+leads.getLimit();
 		}
@@ -127,7 +141,7 @@ leads.setFollowupdate("2022-07-24");
 		
 		
 
-        String query="SELECT * FROM leads_personal_info  where 1 "+ sno + order_by  +" "+ limit ;	
+        String query="SELECT * FROM leads_personal_info  where 1 "+ where + order_by  +" "+ limit ;	
 		try {			
 			RowMapper<Leads> rowMapper = new BeanPropertyRowMapper<Leads>(Leads.class);
 			List<Leads> contactList = jdbcTemplate.query(query, rowMapper );
