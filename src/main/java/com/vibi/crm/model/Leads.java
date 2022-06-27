@@ -28,11 +28,14 @@ public class Leads {
     public String followupdate;
     public String source;
     public String is_convert;
+    public String status;
     public String created_by;
     public String created_date;
     public String updated_by;
     public String updated_date;
-    
+    public String limit;
+    public String order_by;
+
     public String getSno() {
         return sno;
     }
@@ -194,6 +197,12 @@ public class Leads {
     }
     public void setIs_convert(String is_convert) {
         this.is_convert = is_convert;
+    }    
+    public String getStatus() {
+        return status;
+    }
+    public void setStatus(String status) {
+        this.status = status;
     }
     public String getCreated_by() {
         return created_by;
@@ -218,6 +227,18 @@ public class Leads {
     }
     public void setUpdated_date(String updated_date) {
         this.updated_date = updated_date;
+    }
+    public String getLimit() {
+        return limit;
+    }
+    public void setLimit(String limit) {
+        this.limit = limit;
+    }
+    public String getOrder_by() {
+        return order_by;
+    }
+    public void setOrder_by(String order_by) {
+        this.order_by = order_by;
     }
     
   

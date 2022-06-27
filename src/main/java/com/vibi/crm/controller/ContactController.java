@@ -172,8 +172,9 @@ public class ContactController {
 		return new ResponseEntity<String>(json_response, status);				
 	}
 	
+
 	@RequestMapping(method = RequestMethod.GET, value = "/getAllClientList")
-	public ResponseEntity<String> getAllClientList(@RequestBody ClientContact contact, HttpSession session) {
+	public ResponseEntity<String> getAllClientList() {
 		HttpStatus status = HttpStatus.OK;
 		Gson g = new Gson(); 
 		String json_response = "";

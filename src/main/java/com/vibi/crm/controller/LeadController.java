@@ -94,7 +94,7 @@ public class LeadController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/getAllLeadInfo")
-	public ResponseEntity<String> getAllLeadInfo(@RequestBody Leads leads, HttpSession session) {
+	public ResponseEntity<String> getAllLeadInfo() {
 		HttpStatus status = HttpStatus.OK;
 		Gson g = new Gson();
 		String json_response = "";

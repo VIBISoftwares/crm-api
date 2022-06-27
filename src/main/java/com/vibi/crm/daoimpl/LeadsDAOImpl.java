@@ -62,7 +62,9 @@ leads.setFollowupdate("2022-07-24");
 
     @Override
     public String updateLeadInfo(Leads leads) {
-        String query = "UPDATE leads_personal_info SET title=?,  firstname=?,  middlename=?,  lastname=?,  gender=?,  email=?,  contact=?,  marital_status=?,  guardian_type=?,  guardian_name=?,  guardian_contact=?,  occupation=?,  dob=?, relegion=?, community=?, caste=?, address_line1=?, address_line2=?, area=?, district=?, state=?, country=?, pincode=?, followupdate=?, source=?, is_convert=?, updated_by=?, updated_date=? WHERE sno=?";	
+
+
+        String query = "UPDATE leads_personal_info SET title=?,  firstname=?,  middlename=?,  lastname=?,  gender=?,  email=?,  contact=?,  marital_status=?,  guardian_type=?,  guardian_name=?,  guardian_contact=?,  occupation=?,  dob=?, relegion=?, community=?, caste=?, address_line1=?, address_line2=?, area=?, district=?, state=?, country=?, pincode=?, followupdate=?, source=?, is_convert=?, updated_by=?, updated_date=? WHERE sno=? ";
 		try {
 
 
@@ -109,10 +111,26 @@ leads.setFollowupdate("2022-07-24");
 
     @Override
     public List<Leads> findLeadInfo(Leads leads) {
-        String query="SELECT * FROM leads_personal_info  where status=1 and sno=? ";
+		System.out.println("leads data = "+ g.toJson(leads));
+		String sno="";
+		String limit = " ";//limit "+leads.getLimit();
+		String order_by =" ";//order by "+leads.getOrder_by();
+		if(leads.getSno()!=null){
+			sno =" and sno = "+leads.getSno();
+		}
+		if(leads.getLimit()!=null){
+			limit = " limit "+leads.getLimit();
+		}
+		if(leads.getOrder_by()!=null){
+			order_by =" order by "+leads.getOrder_by();
+		}
+		
+		
+
+        String query="SELECT * FROM leads_personal_info  where 1 "+ sno + order_by  +" "+ limit ;	
 		try {			
 			RowMapper<Leads> rowMapper = new BeanPropertyRowMapper<Leads>(Leads.class);
-			List<Leads> contactList = jdbcTemplate.query(query, rowMapper, leads.getSno() );
+			List<Leads> contactList = jdbcTemplate.query(query, rowMapper );
 			if (contactList  != null) {
 				logger.info("Login as - Admin , "
 						+ " response - " + g.toJson(contactList ) + "\n");
