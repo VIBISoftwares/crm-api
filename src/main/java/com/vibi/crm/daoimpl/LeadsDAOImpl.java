@@ -122,10 +122,10 @@ leads.setFollowupdate("2022-07-24");
 			where =" and sno = "+leads.getSno();
 		}
 		if(leads.getFrom_date()!=null){
-			where = where+" and DATE_FORMAT(followupdate,'%Y-%m-%d') >= "+leads.getFrom_date();
+			where = where+" and DATE_FORMAT(followupdate,'%Y-%m-%d') >= '"+leads.getFrom_date()+"'";
 		}
 		if(leads.getTo_date()!=null){
-			where = where+" and  DATE_FORMAT(followupdate,'%Y-%m-%d')  <= "+leads.getTo_date();
+			where = where+" and DATE_FORMAT(followupdate,'%Y-%m-%d') <= '"+leads.getTo_date()+"'";
 		}
 
 		if(leads.getOrder_by()!=null){
