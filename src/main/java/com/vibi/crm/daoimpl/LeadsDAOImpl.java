@@ -34,7 +34,12 @@ public class LeadsDAOImpl implements LeadsDAO{
     @Override
     public String addLeadInfo(Leads leads) {
         String query = "INSERT INTO leads_personal_info ( title, firstname, middlename, lastname, gender, email, contact, marital_status, guardian_type, guardian_name, guardian_contact, occupation, dob,relegion,community,caste,address_line1,address_line2,area,district,state,country,pincode,followupdate,source,is_convert,created_by,created_date	 )"
-        + " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";			
+        + " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";		
+		
+		String lead_sno="";
+		String getSno = "SELECT LAST_INSERT_ID() as lead_sno FROM leads_personal_info   ";
+		
+
                 try {
 
 
@@ -43,10 +48,21 @@ leads.setDob("2022-04-14");
 leads.setFollowupdate("2022-07-24");
 // remove temp
 
+RowMapper<Leads> rowMapper = new BeanPropertyRowMapper<Leads>(Leads.class);
+		
 
                     logger.info("Login as - Admin action - addLeadInfo , Inputs - " + g.toJson(leads) + "\n");		
                     int row = jdbcTemplate.update(query, leads.getTitle(),leads.getFirstname(),leads.getMiddlename(),leads.getLastname(),leads.getGender(),leads.getEmail(),leads.getContact(),leads.getMarital_status(),leads.getGuardian_type(),leads.getGuardian_name(),leads.getGuardian_contact(),leads.getOccupation(),leads.getDob(),leads.getRelegion(),leads.getCommunity(),leads.getCaste(),leads.getAddress_line1(),leads.getAddress_line2(),leads.getArea(),leads.getDistrict(),leads.getState(),leads.getCountry(),leads.getPincode(),leads.getFollowupdate(),leads.getSource(),leads.getIs_convert(),  leads.getCreated_by() ,	UtilClass.getCurrentDateAndTime() );
-                    if (row>0) {
+                   
+					
+					if (row>0) {
+
+						List<Leads> getLastid = jdbcTemplate.query(getSno, rowMapper );
+ 						lead_sno  = getLastid.get(0).lead_sno;
+
+						String appDateQry = " INSERT INTO lead_appointment (lead_sno, appointment_datetime,created_by,created_date ) VALUES (?,?,?,?)";
+						int insertAppointment = jdbcTemplate.update(appDateQry, lead_sno, leads.getFollowupdate(),  leads.getCreated_by() ,	UtilClass.getCurrentDateAndTime() );
+					
                         logger.info("Login as - Admin , addLeadInfo response - "+ g.toJson(Constant.MSG_STATUS_SUCCESS) + "\n");
                         return Constant.MSG_STATUS_SUCCESS;
                     }
@@ -94,7 +110,7 @@ leads.setFollowupdate("2022-07-24");
 
     @Override
     public List<Leads> getAllLeadInfo() {
-        String query="SELECT * FROM leads_personal_info"; // where status=1 
+        String query="SELECT A.*,B.appointment_datetime FROM leads_personal_info A LEFT JOIN lead_appointment B ON B.lead_sno=A.sno"; // where status=1 
 		try {			
 			RowMapper<Leads> rowMapper = new BeanPropertyRowMapper<Leads>(Leads.class);
 			List<Leads> contactList = jdbcTemplate.query(query, rowMapper );
@@ -113,19 +129,16 @@ leads.setFollowupdate("2022-07-24");
     public List<Leads> findLeadInfo(Leads leads) {
 		System.out.println("leads data = "+ g.toJson(leads));
 		String where="";
-		String sno="";
-		String from_date="";
-		String to_date="";
 		String limit = " ";//limit "+leads.getLimit();
 		String order_by =" ";//order by "+leads.getOrder_by();
 		if(leads.getSno()!=null){
-			where =" and sno = "+leads.getSno();
+			where =" and A.sno = "+leads.getSno();
 		}
 		if(leads.getFrom_date()!=null){
-			where = where+" and DATE_FORMAT(followupdate,'%Y-%m-%d') >= '"+leads.getFrom_date()+"'";
+			where = where+" and DATE_FORMAT(appointment_datetime,'%Y-%m-%d') >= '"+leads.getFrom_date()+"'";
 		}
 		if(leads.getTo_date()!=null){
-			where = where+" and DATE_FORMAT(followupdate,'%Y-%m-%d') <= '"+leads.getTo_date()+"'";
+			where = where+" and DATE_FORMAT(appointment_datetime,'%Y-%m-%d') <= '"+leads.getTo_date()+"'";
 		}
 
 		if(leads.getOrder_by()!=null){
@@ -138,10 +151,9 @@ leads.setFollowupdate("2022-07-24");
 		if(leads.getOrder_by()!=null){
 			order_by =" order by "+leads.getOrder_by();
 		}
-		
-		
+			
 
-        String query="SELECT * FROM leads_personal_info  where 1 "+ where + order_by  +" "+ limit ;	
+        String query="SELECT A.*,B.appointment_datetime FROM leads_personal_info  A LEFT JOIN lead_appointment B ON B.lead_sno=A.sno where 1 "+ where + order_by  +" "+ limit ;	
 		try {			
 			RowMapper<Leads> rowMapper = new BeanPropertyRowMapper<Leads>(Leads.class);
 			List<Leads> contactList = jdbcTemplate.query(query, rowMapper );

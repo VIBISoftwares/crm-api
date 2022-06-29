@@ -39,6 +39,25 @@ public class Leads {
     public String from_date;
     public String to_date;
 
+    public String appointment_datetime;
+    public String lead_sno;
+
+    public String getLead_sno() {
+        return lead_sno;
+    }
+
+    public void setLead_sno(String lead_sno) {
+        this.lead_sno = lead_sno;
+    }
+
+    public String getAppointment_datetime() {
+        return appointment_datetime;
+    }
+
+    public void setAppointment_datetime(String appointment_datetime) {
+        this.appointment_datetime = appointment_datetime;
+    }
+
     public String getSno() {
         return sno;
     }
