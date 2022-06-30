@@ -132,4 +132,64 @@ public class LeadController {
 		return new ResponseEntity<String>(json_response, status);
 	}
 
+
+
+	@RequestMapping(method = RequestMethod.POST, value = "/changeFollowupDate")
+	public ResponseEntity<String> changeFollowupDate(@RequestBody Leads leads, HttpSession session) {
+		HttpStatus status = HttpStatus.OK;
+		Gson g = new Gson();
+		String json_response = "";
+		String createLead = leadsDao.changeFollowupDate(leads);
+		if (createLead.equalsIgnoreCase(Constant.MSG_STATUS_SUCCESS)) {
+			json_response = "{\"status\":" + g.toJson(Constant.MSG_STATUS_SUCCESS) + ",\"message\":"
+					+ g.toJson(Constant.MSG_LEAD_UPDATE_SUCCESS) + "}";
+		} else {
+			json_response = "{\"status\":" + g.toJson(Constant.MSG_STATUS_FAILURE) + ",\"message\":"
+					+ g.toJson(Constant.MSG_LEAD_UPDATE_FAIL) + "}";
+		}
+		logger.info("Login as - Admin , action - changeFollowupDate json respone : - " + json_response + "\n");		
+		return new ResponseEntity<String>(json_response,status);
+	}
+
+	@RequestMapping(method = RequestMethod.GET, value = "/getTodayFollowups")
+	public ResponseEntity<String> getTodayFollowups() {
+		HttpStatus status = HttpStatus.OK;
+		Gson g = new Gson();
+		String json_response = "";
+		List<Leads> clientList = leadsDao.getTodayFollowups();
+		if (clientList != null) {
+			json_response = "{\"status\":" + g.toJson(Constant.MSG_STATUS_SUCCESS) + ",\"message\":"
+					+ g.toJson(Constant.MSG_RCD_AVL)
+					+ ",\"company_list\":" + g.toJson(clientList) + "}";
+		} else {
+			json_response = "{\"status\":" + g.toJson(Constant.MSG_STATUS_FAILURE) + ",\"message\":"
+					+ g.toJson(Constant.MSG_RCD_NOT_AVL)
+					+ "}";
+		}
+		logger.info("Login as - Admin,  action - getTodayFollowups json respone : - " + json_response + "\n");
+		return new ResponseEntity<String>(json_response, status);
+
+	}
+
+
+	@RequestMapping(method = RequestMethod.GET, value = "/getEsclationInfo")
+	public ResponseEntity<String> getEsclationInfo() {
+		HttpStatus status = HttpStatus.OK;
+		Gson g = new Gson();
+		String json_response = "";
+		List<Leads> clientList = leadsDao.getEsclationInfo();
+		if (clientList != null) {
+			json_response = "{\"status\":" + g.toJson(Constant.MSG_STATUS_SUCCESS) + ",\"message\":"
+					+ g.toJson(Constant.MSG_RCD_AVL)
+					+ ",\"company_list\":" + g.toJson(clientList) + "}";
+		} else {
+			json_response = "{\"status\":" + g.toJson(Constant.MSG_STATUS_FAILURE) + ",\"message\":"
+					+ g.toJson(Constant.MSG_RCD_NOT_AVL)
+					+ "}";
+		}
+		logger.info("Login as - Admin,  action - getTodayFollowups json respone : - " + json_response + "\n");
+		return new ResponseEntity<String>(json_response, status);
+
+	}
+
 }

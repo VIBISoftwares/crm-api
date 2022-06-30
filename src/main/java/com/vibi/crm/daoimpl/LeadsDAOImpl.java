@@ -3,6 +3,7 @@ package com.vibi.crm.daoimpl;
 
 import java.util.List;
 
+import org.json.JSONArray;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +42,6 @@ public class LeadsDAOImpl implements LeadsDAO{
 		
 
                 try {
-
 
 // temp
 leads.setDob("2022-04-14");
@@ -186,6 +186,74 @@ leads.setFollowupdate("2022-07-24");
 		}
 		logger.info("Login as - Admin, deleteLeadInfo response - "+ g.toJson(Constant.MSG_STATUS_FAILURE) + "\n");
 		return Constant.MSG_STATUS_FAILURE;
+    }
+
+	@Override
+	public String changeFollowupDate(Leads leads) {
+		String leadno = "";
+        JSONArray jsonArray = new JSONArray(leads.getLead_sno());
+        String [] stringArray = new String[jsonArray.length()];
+        for (int i = 0; i < jsonArray.length(); i++) {
+            stringArray[i] = jsonArray.getString(i);
+            leadno = "'"+jsonArray.getString(i)+"',"+leadno;
+        }
+		leadno = leadno.substring(0,leadno.length()-1);
+
+		String query = "UPDATE lead_appointment SET appointment_datetime=?, updated_date=? WHERE lead_sno IN ("+leadno+") ";	
+		try {
+			logger.info("Login as - Admin action - changeFollowupDate , Inputs - " + g.toJson(leads) + "\n");
+		
+			int row = jdbcTemplate.update(query, leads.getAppointment_datetime(), UtilClass.getCurrentDateAndTime() );
+			if (row>0) {
+				logger.info("Login as - Admin , changeFollowupDate response - "+ g.toJson(Constant.MSG_STATUS_SUCCESS) + "\n");
+				return Constant.MSG_STATUS_SUCCESS;
+			}
+		} catch (EmptyResultDataAccessException empty) {
+			logger.info("Login as - Admin, action - changeFollowupDate,  EmptyResultDataAccessException - " + empty.toString() + "\n");
+		} catch (Exception e) {
+			logger.info("Login as - Admin, action - changeFollowupDate,  Exception - "+ e.toString() + "\n");
+		}
+		logger.info("Login as - Admin, changeFollowupDate response - "+ g.toJson(Constant.MSG_STATUS_FAILURE) + "\n");
+		return Constant.MSG_STATUS_FAILURE;
+	}
+
+	@Override
+	public List<Leads> getTodayFollowups() {
+		String query="SELECT A.*,B.appointment_datetime FROM leads_personal_info A "
+		+" LEFT JOIN lead_appointment B ON B.lead_sno=A.sno"
+		+" WHERE DATE_FORMAT(B.appointment_datetime,'%Y-%m-%d') = DATE_FORMAT(NOW(),'%Y-%m-%d')";
+		try {			
+			RowMapper<Leads> rowMapper = new BeanPropertyRowMapper<Leads>(Leads.class);
+			List<Leads> contactList = jdbcTemplate.query(query, rowMapper );
+			if (contactList  != null) {
+				logger.info("Login as - Admin , "
+						+ " response - " + g.toJson(contactList ) + "\n");
+				return contactList ;
+			}
+		}catch (Exception e) {
+			logger.info("Login as - Admin , action - getTodayFollowups,  Exception - " + e.toString() + "\n");
+		}
+		return null;
+    }
+	
+
+	@Override
+	public List<Leads> getEsclationInfo() {
+		String query="SELECT A.*,B.appointment_datetime, DATEDIFF( DATE_FORMAT(B.appointment_datetime,'%Y-%m-%d'), DATE_FORMAT(NOW(),'%Y-%m-%d')) AS esclation_count FROM leads_personal_info A "
+		+" LEFT JOIN lead_appointment B ON B.lead_sno=A.sno"
+		+" WHERE DATE_FORMAT(B.appointment_datetime,'%Y-%m-%d') < DATE_FORMAT(NOW(),'%Y-%m-%d')";
+		try {			
+			RowMapper<Leads> rowMapper = new BeanPropertyRowMapper<Leads>(Leads.class);
+			List<Leads> contactList = jdbcTemplate.query(query, rowMapper );
+			if (contactList  != null) {
+				logger.info("Login as - Admin , "
+						+ " response - " + g.toJson(contactList ) + "\n");
+				return contactList ;
+			}
+		}catch (Exception e) {
+			logger.info("Login as - Admin , action - getTodayFollowups,  Exception - " + e.toString() + "\n");
+		}
+		return null;
     }
 
 }

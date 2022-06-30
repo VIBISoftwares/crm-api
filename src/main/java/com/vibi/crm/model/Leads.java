@@ -42,6 +42,29 @@ public class Leads {
     public String appointment_datetime;
     public String lead_sno;
 
+    public String branch;
+    public String kyc_number;
+    public String kyc_type;
+    public String brokerage_offer;
+    public String cheque_amount;
+    public String plan_type;
+    public String gst;
+    public String total_cost;
+    public String trade_amount;
+    public String payment_date;
+    public String account_no;
+    public String payment_mode;
+    public String trans_id;
+    public String esclation_count;
+
+    public String getEsclation_count() {
+        return esclation_count;
+    }
+
+    public void setEsclation_count(String esclation_count) {
+        this.esclation_count = esclation_count;
+    }
+
     public String getLead_sno() {
         return lead_sno;
     }
@@ -346,4 +369,110 @@ public class Leads {
         return to_date;
     }
 
+    public String getBranch() {
+        return branch;
+    }
+
+    public void setBranch(String branch) {
+        this.branch = branch;
+    }
+
+    public String getKyc_number() {
+        return kyc_number;
+    }
+
+    public void setKyc_number(String kyc_number) {
+        this.kyc_number = kyc_number;
+    }
+
+    public String getKyc_type() {
+        return kyc_type;
+    }
+
+    public void setKyc_type(String kyc_type) {
+        this.kyc_type = kyc_type;
+    }
+
+    public String getBrokerage_offer() {
+        return brokerage_offer;
+    }
+
+    public void setBrokerage_offer(String brokerage_offer) {
+        this.brokerage_offer = brokerage_offer;
+    }
+
+    public String getCheque_amount() {
+        return cheque_amount;
+    }
+
+    public void setCheque_amount(String cheque_amount) {
+        this.cheque_amount = cheque_amount;
+    }
+
+    public String getPlan_type() {
+        return plan_type;
+    }
+
+    public void setPlan_type(String plan_type) {
+        this.plan_type = plan_type;
+    }
+
+    public String getGst() {
+        return gst;
+    }
+
+    public void setGst(String gst) {
+        this.gst = gst;
+    }
+
+    public String getTotal_cost() {
+        return total_cost;
+    }
+
+    public void setTotal_cost(String total_cost) {
+        this.total_cost = total_cost;
+    }
+
+    public String getTrade_amount() {
+        return trade_amount;
+    }
+
+    public void setTrade_amount(String trade_amount) {
+        this.trade_amount = trade_amount;
+    }
+
+    public String getPayment_date() {
+        return payment_date;
+    }
+
+    public void setPayment_date(String payment_date) {
+        this.payment_date = payment_date;
+    }
+
+    public String getAccount_no() {
+        return account_no;
+    }
+
+    public void setAccount_no(String account_no) {
+        this.account_no = account_no;
+    }
+
+    public String getPayment_mode() {
+        return payment_mode;
+    }
+
+    public void setPayment_mode(String payment_mode) {
+        this.payment_mode = payment_mode;
+    }
+
+    public String getTrans_id() {
+        return trans_id;
+    }
+
+    public void setTrans_id(String trans_id) {
+        this.trans_id = trans_id;
+    }
+
+
+    
 }
