@@ -39,15 +39,11 @@ public class LeadsDAOImpl implements LeadsDAO{
 		
 		String lead_sno="";
 		String getSno = "SELECT LAST_INSERT_ID() as lead_sno FROM leads_personal_info   ";
-		
-
-                try {
-
+		try {
 // temp
 leads.setDob("2022-04-14");
 leads.setFollowupdate("2022-07-24");
 // remove temp
-
 RowMapper<Leads> rowMapper = new BeanPropertyRowMapper<Leads>(Leads.class);
 		
 
@@ -60,6 +56,9 @@ RowMapper<Leads> rowMapper = new BeanPropertyRowMapper<Leads>(Leads.class);
 						List<Leads> getLastid = jdbcTemplate.query(getSno, rowMapper );
  						lead_sno  = getLastid.get(0).lead_sno;
 
+						String lead_trade_info = " INSERT INTO  lead_trade_info (lead_sno, branch,kyc_number,kyc_type,brokerage_offer,cheque_amount,plan_type,gst,total_cost,trade_amount,payment_date,account_no,payment_mode,trans_id ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+						int insertTradeInfo = jdbcTemplate.update(lead_trade_info, lead_sno,leads.getBranch(), leads.getKyc_number(),leads.getKyc_type(),leads.getBrokerage_offer(),leads.getCheque_amount(),leads.getPlan_type(),leads.getGst(),leads.getTotal_cost(),leads.getTrade_amount(), leads.getPayment_date(),leads.getAccount_no(),leads.getPayment_mode(),leads.getTrans_id() );
+						
 						String appDateQry = " INSERT INTO lead_appointment (lead_sno, appointment_datetime,created_by,created_date ) VALUES (?,?,?,?)";
 						int insertAppointment = jdbcTemplate.update(appDateQry, lead_sno, leads.getFollowupdate(),  leads.getCreated_by() ,	UtilClass.getCurrentDateAndTime() );
 					
@@ -110,7 +109,9 @@ leads.setFollowupdate("2022-07-24");
 
     @Override
     public List<Leads> getAllLeadInfo() {
-        String query="SELECT A.*,B.appointment_datetime FROM leads_personal_info A LEFT JOIN lead_appointment B ON B.lead_sno=A.sno"; // where status=1 
+        String query="SELECT A.*,B.appointment_datetime,C.lead_sno,C.branch,C.kyc_number, C.kyc_type,C.brokerage_offer,C.cheque_amount,C.plan_type,C.gst,C.total_cost,C.trade_amount,C.payment_date,C.account_no,C.payment_mode,C.trans_id	 FROM leads_personal_info A " +
+		" LEFT JOIN lead_appointment B ON B.lead_sno=A.sno" +
+		" LEFT JOIN lead_trade_info C ON C.lead_sno=A.sno ORDER BY A.sno";
 		try {			
 			RowMapper<Leads> rowMapper = new BeanPropertyRowMapper<Leads>(Leads.class);
 			List<Leads> contactList = jdbcTemplate.query(query, rowMapper );
@@ -255,5 +256,25 @@ leads.setFollowupdate("2022-07-24");
 		}
 		return null;
     }
+
+	@Override
+	public String addLeadTrade(Leads leads) {
+		try {	
+		String lead_trade_info = " INSERT INTO  lead_trade_info (lead_sno, branch,kyc_number,kyc_type,brokerage_offer,cheque_amount,plan_type,gst,total_cost,trade_amount,payment_date,account_no,payment_mode,trans_id ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		int insertTradeInfo = jdbcTemplate.update(lead_trade_info, leads.getLead_sno(),leads.getBranch(), leads.getKyc_number(),leads.getKyc_type(),leads.getBrokerage_offer(),leads.getCheque_amount(),leads.getPlan_type(),leads.getGst(),leads.getTotal_cost(),leads.getTrade_amount(), leads.getPayment_date(),leads.getAccount_no(),leads.getPayment_mode(),leads.getTrans_id() );
+		if (insertTradeInfo>0) {
+		logger.info("Login as - Admin , addLeadTrade response - "+ g.toJson(Constant.MSG_STATUS_SUCCESS) + "\n");
+		return Constant.MSG_STATUS_SUCCESS;
+	}
+} catch (EmptyResultDataAccessException empty) {
+	logger.info("Login as - Admin, action - addLeadTrade,  EmptyResultDataAccessException - " + empty.toString() + "\n");
+} catch (Exception e) {
+	logger.info("Login as - Admin, action - addLeadTrade,  Exception - "+ e.toString() + "\n");
+}
+logger.info("Login as - Admin, addLeadTrade response - "
+		+ g.toJson(Constant.MSG_STATUS_FAILURE) + "\n");
+return Constant.MSG_STATUS_FAILURE;
+
+	}
 
 }

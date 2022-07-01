@@ -192,4 +192,26 @@ public class LeadController {
 
 	}
 
+
+	
+	@RequestMapping(method = RequestMethod.POST, value = "/addLeadTrade")
+	public ResponseEntity<String> addLeadTrade(@RequestBody Leads leads, HttpSession session) {
+		HttpStatus status = HttpStatus.OK;
+		Gson g = new Gson();
+		String json_response = "";
+		String createLead = leadsDao.addLeadTrade(leads);
+		if (createLead.equalsIgnoreCase(Constant.MSG_STATUS_SUCCESS)) {
+			json_response = "{\"status\":" + g.toJson(Constant.MSG_STATUS_SUCCESS) + ",\"message\":"
+					+ g.toJson(Constant.MSG_LEAD_ADD_SUCCESS) + "}";
+		} else {
+			json_response = "{\"status\":" + g.toJson(Constant.MSG_STATUS_FAILURE) + ",\"message\":"
+					+ g.toJson(Constant.MSG_LEAD_ADD_FAIL) + "}";
+		}
+		logger.info("Login as - Admin , action - addLeadTrade json respone : - " + json_response + "\n");
+		return new ResponseEntity<String>(json_response, status);
+
+	}
+
+
+
 }

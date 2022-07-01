@@ -16,4 +16,6 @@ public String changeFollowupDate(Leads leads);
 public List<Leads> getTodayFollowups();
 public List<Leads> getEsclationInfo();
 
+public String addLeadTrade(Leads leads);
+
 }
