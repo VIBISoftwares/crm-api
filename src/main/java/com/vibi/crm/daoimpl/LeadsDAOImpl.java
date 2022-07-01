@@ -277,4 +277,50 @@ return Constant.MSG_STATUS_FAILURE;
 
 	}
 
+	@Override
+	public List<Leads> leadsReport(Leads leads) {
+			System.out.println("leads data = "+ g.toJson(leads));
+			String where="";
+			String limit = " ";
+			String order_by =" ";
+			if(leads.getSno()!=null){
+				where =" and A.sno = "+leads.getSno();
+			}
+			if(leads.getFrom_date()!=null){
+				where = where+" and DATE_FORMAT(appointment_datetime,'%Y-%m-%d') >= '"+leads.getFrom_date()+"'";
+			}
+			if(leads.getTo_date()!=null){
+				where = where+" and DATE_FORMAT(appointment_datetime,'%Y-%m-%d') <= '"+leads.getTo_date()+"'";
+			}
+	
+			if(leads.getOrder_by()!=null){
+				order_by =" order by "+leads.getOrder_by();
+			}
+	
+			if(leads.getLimit()!=null){
+				limit = " limit "+leads.getLimit();
+			}
+			if(leads.getOrder_by()!=null){
+				order_by =" order by "+leads.getOrder_by();
+			}				
+			String query="SELECT A.*,CONCAT(A.firstname,' ',A.lastname) full_name,   CONCAT(address_line1,' ',address_line2,' ',area,' ',district,' ', state,' ',country,' ', pincode) AS full_address, B.appointment_datetime,C.lead_sno,C.branch,C.kyc_number, C.kyc_type,C.brokerage_offer,C.cheque_amount,C.plan_type,C.gst,C.total_cost,C.trade_amount,C.payment_date,C.account_no,C.payment_mode,C.trans_id , CONCAT('Plan type : ',C.plan_type, '/- Trade Amount:', coalesce(C.trade_amount,0), ' Payment Date:', date_format(C.payment_date,'%d-%m-%Y') ) AS convertion " +
+			" FROM leads_personal_info A " +
+			" LEFT JOIN lead_appointment B ON B.lead_sno=A.sno" +
+			" LEFT JOIN lead_trade_info C ON C.lead_sno=A.sno " + where +
+			" ORDER BY A.sno";
+//,' Trade Amount: ', C.trade_amount,' Payment Date:', COALEASE(C.payment_date)
+			try {			
+				RowMapper<Leads> rowMapper = new BeanPropertyRowMapper<Leads>(Leads.class);
+				List<Leads> contactList = jdbcTemplate.query(query, rowMapper );
+				if (contactList  != null) {
+					logger.info("Login as - Admin , "
+							+ " response - " + g.toJson(contactList ) + "\n");
+					return contactList ;
+				}
+			}catch (Exception e) {
+				logger.info("Login as - Admin , action - getAllLeadInfo,  Exception - " + e.toString() + "\n");
+			}
+			return null;
+		}
+
 }

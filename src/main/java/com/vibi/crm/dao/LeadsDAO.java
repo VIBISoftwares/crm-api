@@ -18,4 +18,7 @@ public List<Leads> getEsclationInfo();
 
 public String addLeadTrade(Leads leads);
 
+//  Report
+public List<Leads> leadsReport(Leads leads);
+
 }

@@ -1,3 +1,8 @@
+
+Run spring java in ubuntu
+
+/usr/bin/env /usr/lib/jvm/java-11-openjdk-amd64/bin/java -Dspring.jmx.enabled=true -Dspring.application.admin.enabled=true -Dspring.boot.project.name=crm @/tmp/cp_f1u5wj2tcf3k3f3nve43lh6v5.argfile com.vibi.crm.CrmApplication 
+
 http://localhost:8080/crm/api/addCompanyInfo
 request: 
     {

@@ -214,4 +214,26 @@ public class LeadController {
 
 
 
+	@RequestMapping(method = RequestMethod.POST, value = "/getLeadsReport")
+	public ResponseEntity<String> getLeadsReport(@RequestBody Leads leads, HttpSession session) {
+		HttpStatus status = HttpStatus.OK;
+		Gson g = new Gson();
+		String json_response = "";
+		List<Leads> companyList = leadsDao.leadsReport(leads); System.out.println(companyList);
+		if (companyList != null) {
+			json_response = "{\"status\":" + g.toJson(Constant.MSG_STATUS_SUCCESS) + ",\"message\":"
+					+ g.toJson(Constant.MSG_RCD_AVL)
+					+ ",\"company_list\":" + g.toJson(companyList) + "}";
+		} else {
+			json_response = "{\"status\":" + g.toJson(Constant.MSG_STATUS_FAILURE) + ",\"message\":"
+					+ g.toJson(Constant.MSG_RCD_NOT_AVL)
+					+ "}";
+		}
+		logger.info("Login as - Admin,  action - findLeadInfo json respone : - " + json_response + "\n");
+		return new ResponseEntity<String>(json_response, status);
+	}
+
+
+
+
 }

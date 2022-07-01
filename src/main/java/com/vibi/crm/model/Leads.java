@@ -57,6 +57,21 @@ public class Leads {
     public String trans_id;
     public String esclation_count;
 
+
+    public String full_name;
+    public String full_address;
+    public String convert_details;
+    public String convertion;
+
+
+    public String getFull_address() {
+        return full_address;
+    }
+
+    public void setFull_address(String full_address) {
+        this.full_address = full_address;
+    }
+
     public String getEsclation_count() {
         return esclation_count;
     }
@@ -471,6 +486,30 @@ public class Leads {
 
     public void setTrans_id(String trans_id) {
         this.trans_id = trans_id;
+    }
+
+    public String getFull_name() {
+        return full_name;
+    }
+
+    public void setFull_name(String full_name) {
+        this.full_name = full_name;
+    }
+
+    public String getConvert_details() {
+        return convert_details;
+    }
+
+    public void setConvert_details(String convert_details) {
+        this.convert_details = convert_details;
+    }
+
+    public String getConvertion() {
+        return convertion;
+    }
+
+    public void setConvertion(String convertion) {
+        this.convertion = convertion;
     }
 
 
